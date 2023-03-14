@@ -1,14 +1,3 @@
-sudoku = [[9, 0, 0, 4, 1, 5, 0, 7, 8],
-          [1, 8, 5, 7, 0, 0, 0, 0, 9],
-          [3, 0, 0, 0, 0, 8, 5, 6, 0],
-          [0, 1, 0, 3, 9, 0, 7, 4, 0],
-          [0, 0, 0, 1, 0, 0, 0, 3, 0],
-          [0, 0, 3, 0, 0, 4, 0, 9, 0],
-          [5, 0, 1, 6, 7, 0, 0, 8, 0],
-          [8, 0, 0, 0, 0, 9, 6, 0, 0],
-          [6, 4, 0, 0, 0, 1, 2, 5, 0]]
-
-
 # solves the sudoku
 def solve(board):
     cell_coordinates = is_free(board)
@@ -85,5 +74,17 @@ def print_sudoku(board):
                 print(str(board[r][c]) + ' ', end='')
 
 
+def get_board():
+    user_input = input(
+        'Please, input the fields of your sudoku one by one, starting form the top left corner of the board. For empty fields, input 0.')
+    sudoku = []
+    while user_input != '':
+        sudoku.append([int(x) for x in list(user_input[:9])])
+        user_input = user_input[9:]
+
+    return sudoku
+
+
+sudoku = get_board()
 solve(sudoku)
 print_sudoku(sudoku)
