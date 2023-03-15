@@ -59,28 +59,28 @@ def is_free(board):
 
 # prints the sudoku as a board
 def print_sudoku(board):
-    print(" ")
+    print(' ')
     for r in range(len(board)):
         if r % 3 == 0 and r != 0:
-            print("-------------------------")
+            print('-------------------------')
 
         for c in range(len(board[0])):
             if c % 3 == 0:
-                print("| ", end="")
+                print('| ', end='')
 
             if c == len(board[0]) - 1:
-                print(str(board[r][c]) + " |")
+                print(str(board[r][c]) + ' |')
             else:
-                print(str(board[r][c]) + " ", end="")
+                print(str(board[r][c]) + ' ', end='')
 
 
 # returns the sudoku board from the user input
 def get_board():
     user_input = input(
-        "Please, input the numbers from the fields of your sudoku one by one, starting from the top left corner of the board. For empty fields, input 0."
+        'Please, input the numbers from the fields of your sudoku one by one, starting from the top left corner of the board. For empty fields, input 0.'
     )
     sudoku = []
-    while user_input != "":
+    while user_input != '':
         sudoku.append([int(x) for x in list(user_input[:9])])
         user_input = user_input[9:]
 
