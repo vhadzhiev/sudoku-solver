@@ -1,16 +1,23 @@
 import tkinter as tk
 
+INSTRUCTIONS_TEXT = '''Instructions: insert your sudoku numbers by clicking with the left mouse 
+button on the cell, that you want to edit. Each click adds 1 to the cell\'s 
+value. If you want to reveal the entire sudoku board after solving it, click 
+the checkbox under the board. Alternatively, you can reveal cells by clicking 
+on them after you have solved the board.'''
+
 
 class SudokuGUI:
     def __init__(self):
         # initialize the root
         self.root = tk.Tk()
         self.root.title('Sudoku solver')
+        self.root.geometry('500x600')
 
         # initialize label with instructions
         self.instructions = tk.Label(
-            self.root, text='Instructions for using the application', font=('TkTextFont', 12))
-        self.instructions.pack(padx=5, pady=5)
+            self.root, text=INSTRUCTIONS_TEXT, font=('TkTextFont', 10))
+        self.instructions.pack(padx=10, pady=10)
 
         # initialize the frame
         self.frame = tk.Frame(self.root, width=500, height=600)
@@ -20,9 +27,9 @@ class SudokuGUI:
         for i in range(9):
             for j in range(9):
                 self.button = tk.Button(
-                    self.frame, text='0', height=2, width=5, name=f'{i}{j}')
+                    self.frame, text='', height=2, width=5, name=f'{i}{j}')
                 self.button.grid(row=i, column=j)
-                self.button['command'] = lambda btn=self.button: self.which_button(
+                self.button['command'] = lambda btn=self.button: self.on_click(
                     btn)
 
         # initialize check button
@@ -38,19 +45,16 @@ class SudokuGUI:
         # make the infinite loop for displaying the app
         self.root.mainloop()
 
-    def on_click(self):
-        print(f'{self.button} clicked')
-
+    # determine which button is clicked and change its text content accordingly
     @staticmethod
-    def which_button(clicked_button):
-        print(clicked_button)
+    def on_click(clicked_button):
         number = clicked_button['text']
         if not number:
-            clicked_button['text'] = 1
+            number = 1
         elif number == 9:
-            clicked_button['text'] = ''
+            number = ''
         else:
-            number += 1
+            number = int(number) + 1
         clicked_button['text'] = number
 
 
