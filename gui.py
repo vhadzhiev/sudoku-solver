@@ -20,8 +20,10 @@ class SudokuGUI:
         for i in range(9):
             for j in range(9):
                 self.button = tk.Button(
-                    self.frame, text='', height=2, width=5, command=self.on_click)
-                self.button.grid(column=i, row=j)
+                    self.frame, text='0', height=2, width=5, name=f'{i}{j}')
+                self.button.grid(row=i, column=j)
+                self.button['command'] = lambda btn=self.button: self.which_button(
+                    btn)
 
         # initialize check button
         self.check_btn = tk.Checkbutton(
@@ -33,11 +35,23 @@ class SudokuGUI:
             self.root, text='Solve', font=('TkTextFont', 10))
         self.solve_btn.pack(padx=5, pady=5)
 
-        # end command
+        # make the infinite loop for displaying the app
         self.root.mainloop()
 
     def on_click(self):
-        print('button clicked')
+        print(f'{self.button} clicked')
+
+    @staticmethod
+    def which_button(clicked_button):
+        print(clicked_button)
+        number = clicked_button['text']
+        if not number:
+            clicked_button['text'] = 1
+        elif number == 9:
+            clicked_button['text'] = ''
+        else:
+            number += 1
+        clicked_button['text'] = number
 
 
 SudokuGUI()
