@@ -27,7 +27,7 @@ class SudokuGUI:
         for i in range(9):
             for j in range(9):
                 self.button = tk.Button(
-                    self.frame, text='', height=2, width=5, name=f'{i}{j}')
+                    self.frame, text='', height=2, width=5, name=f'{i}{j}', relief='solid')
                 self.button.grid(row=i, column=j)
                 self.button['command'] = lambda btn=self.button: self.on_click(
                     btn)
@@ -42,12 +42,24 @@ class SudokuGUI:
             self.root, text='Solve', font=('TkTextFont', 10))
         self.solve_btn.pack(padx=5, pady=5)
 
+        # initialize reset button
+        self.solve_btn = tk.Button(
+            self.root, text='Reset', font=('TkTextFont', 10), command=self.reset_buttons)
+        self.solve_btn.pack(padx=5, pady=5)
+
         # make the infinite loop for displaying the app
         self.root.mainloop()
+
+    def reset_buttons(self):
+        buttons = self.frame.winfo_children()
+        for button in buttons:
+            button['text'] = ''
 
     # determine which button is clicked and change its text content accordingly
     @staticmethod
     def on_click(clicked_button):
+        print(clicked_button)
+        print(str(clicked_button)[-2:])
         number = clicked_button['text']
         if not number:
             number = 1
