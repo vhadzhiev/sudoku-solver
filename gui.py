@@ -44,13 +44,14 @@ class SudokuGUI:
 
         # initialize reset button
         self.solve_btn = tk.Button(
-            self.root, text='Reset', font=('TkTextFont', 10), command=self.reset_buttons)
+            self.root, text='Reset', font=('TkTextFont', 10), command=self.reset)
         self.solve_btn.pack(padx=5, pady=5)
 
         # make the infinite loop for displaying the app
         self.root.mainloop()
 
-    def reset_buttons(self):
+    # reset the sudoku board
+    def reset(self):
         buttons = self.frame.winfo_children()
         for button in buttons:
             button['text'] = ''
@@ -58,8 +59,6 @@ class SudokuGUI:
     # determine which button is clicked and change its text content accordingly
     @staticmethod
     def on_click(clicked_button):
-        print(clicked_button)
-        print(str(clicked_button)[-2:])
         number = clicked_button['text']
         if not number:
             number = 1
