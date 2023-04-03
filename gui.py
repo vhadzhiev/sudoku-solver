@@ -56,6 +56,21 @@ class SudokuGUI:
         for button in buttons:
             button['text'] = ''
 
+    # returns the sudoku board from the user input
+    def get_board(self):
+        sudoku = []
+        buttons = self.frame.winfo_children()
+        for button in buttons:
+            if button['text'] == '':
+                sudoku.append(0)
+            else:
+                sudoku.append(int(button['text']))
+        print(sudoku)
+
+        board = [sudoku[i:i + 9] for i in range(0, len(sudoku), 9)]
+
+        return board
+
     # determine which button is clicked and change its text content accordingly
     @staticmethod
     def on_click(clicked_button):
