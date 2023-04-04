@@ -65,7 +65,6 @@ class SudokuGUI:
                 sudoku.append(0)
             else:
                 sudoku.append(int(button['text']))
-        print(sudoku)
 
         board = [sudoku[i:i + 9] for i in range(0, len(sudoku), 9)]
 
