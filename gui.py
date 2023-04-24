@@ -39,7 +39,7 @@ class SudokuGUI:
 
         # initialize solve button
         self.solve_btn = tk.Button(
-            self.root, text='Solve', font=('TkTextFont', 10))
+            self.root, text='Solve', font=('TkTextFont', 10), command=self.solve_btn_action)
         self.solve_btn.pack(padx=5, pady=5)
 
         # initialize reset button
@@ -56,6 +56,12 @@ class SudokuGUI:
         for button in buttons:
             button['text'] = ''
 
+    # perform actions on click of solve button
+    def solve_btn_action(self):
+        board = self.get_board()
+        self.solve(board)
+        self.populate_sudoku(board)
+
     # returns the sudoku board from the user input
     def get_board(self):
         sudoku = []
@@ -70,6 +76,58 @@ class SudokuGUI:
 
         return board
 
+    # solves the sudoku
+    def solve(self, board):
+        cell_coordinates = self.is_free(board)
+        if cell_coordinates:
+            r, c = cell_coordinates
+
+            for num in range(1, 10):
+                if self.is_valid(r, c, num, board):
+                    board[r][c] = num
+
+                    if self.solve(board):
+                        return True
+
+                    board[r][c] = 0
+
+            return False
+
+        return True
+
+    # returns the coordinates of the first empty cell, if there is one
+    @staticmethod
+    def is_free(board):
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                if board[r][c] == 0:
+                    return r, c
+
+        return None
+
+    # checks if the number is valid solution for the cell
+    @staticmethod
+    def is_valid(r, c, number, board):
+        # is the number unique for the row
+        for i in range(len(board[0])):
+            if board[r][i] == number:
+                return False
+
+        # is the number unique for the column
+        for i in range(len(board)):
+            if board[i][c] == number:
+                return False
+
+        # is the number unique for the 3x3 box
+        x = (r // 3) * 3
+        y = (c // 3) * 3
+        for i in range(x, x + 3):
+            for j in range(y, y + 3):
+                if board[i][j] == number:
+                    return False
+
+        return True
+
     # determine which button is clicked and change its text content accordingly
     @staticmethod
     def on_click(clicked_button):
@@ -81,6 +139,11 @@ class SudokuGUI:
         else:
             number = int(number) + 1
         clicked_button['text'] = number
+
+    # populates the sudoku board with the correct numbers
+    @staticmethod
+    def populate_sudoku(board):
+        pass
 
 
 SudokuGUI()
