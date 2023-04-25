@@ -76,6 +76,17 @@ class SudokuGUI:
 
         return board
 
+    # populates the sudoku board with the correct numbers
+    def populate_sudoku(self, board):
+        buttons = self.frame.winfo_children()
+        counter = 0
+        for i in range(9):
+            for j in range(9):
+                button = buttons[counter]
+                if button['text'] == '':
+                    button['text'] = board[i][j]
+                counter += 1
+
     # solves the sudoku
     def solve(self, board):
         cell_coordinates = self.is_free(board)
@@ -139,11 +150,6 @@ class SudokuGUI:
         else:
             number = int(number) + 1
         clicked_button['text'] = number
-
-    # populates the sudoku board with the correct numbers
-    @staticmethod
-    def populate_sudoku(board):
-        pass
 
 
 SudokuGUI()
